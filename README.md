@@ -11,13 +11,23 @@ This is my repo for *STATS 220*.
 **My top 3 goals this sem:**
 1. Not get more than a week behind on any courses
 2. Get A- and up
-3. get ahaead of my courses
+3. Get ahaead of my courses
+
+![nyan cat](https://laughingsquid.com/wp-content/uploads/nyan.gif)
+
+[GIPHY](https://giphy.com/)
+
+[This repository](https://github.com/ryan-uni-account/stats220)
+
+## my inspo meme
+
+![kid eating cake meme](https://catlintucker.com/wp-content/uploads/2015/02/Catlin-Tucker-Meme-300x198.png)
+
+**Aspects of the meme**
+* A very apealing cake
+* text saying 'Mom told me not to touch it' at the top
+* little girl biting the cake whole and enjoying it
 
 
-A meme that captures how I currently feel about my university studies is ![](https://c.tenor.com/8druEACXtX8AAAAd/tenor.gif)
 
 
-
-
-links to other websites
-a different animated GIF than the one given to you in the foundation project
