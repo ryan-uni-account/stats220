@@ -1,0 +1,119 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+library(tidyverse)
+
+# Importing dataset
+logged_data <- read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ1qpjNoWcstl1u-n4g-HL1JLri9caaAR8sw3YfALqo_88nnLyeO8NjOIMaloFxaY91jbzLZMo5HDho/pub?gid=1670447620&single=true&output=csv', show_col_types = FALSE)
+
+# Renaming each column 
+latest_data <- logged_data %>%
+  rename('name'='Who is filling out this form (first name)',
+         'date'="What's the date and time of occurrence?",
+         'duration'='How long approximately, were you distracted (minutes)', 
+         'distraction_type'='What were you distracted by?', 
+         'location'='Where were you studying?',
+         'gave_up'='Did you go back to studying, or did you give up?')
+
+# Final code for dynamic report
+
+# Exploring the data set
+average_duration <- mean(latest_data$duration)
+maximum_duration <- max(latest_data$duration)
+minimum_duration <- min(latest_data$duration)
+distraction_counts <- count(latest_data, distraction_type)
+most_common_distraction <- latest_data %>%
+  count(distraction_type, sort = TRUE) %>%
+  slice(1) %>%
+  pull(distraction_type)
+```
+
+```{css}
+pre {
+  border: 1px solid #4080a8;
+  border-radius: 10px;
+  background-color: #e3f1fa;
+}
+
+body {
+  font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+  background-color: #cbe6f7;
+  
+}
+
+title {
+  text: bold;
+}
+
+h2 {
+  color: #1e90ff;
+  font-weight: bold;
+}
+
+img {
+  border: 1px solid #4080a8;
+  border-radius: 10px;
+}
+```
+
+## Investigating patterns of distractions from my studies
+
+Over the last week I have documented each time I have been distracted from my studies, making note of how long I was distracted, what the distraction was, and where I was studying. The goal of this report is to identify patterns in my study habits and find ways to reduce distractions.
+
+Across all logged distractions, the average distraction lasted approximately `r round(average_duration, 1)` minutes.
+
+The longest distraction lasted `r maximum_duration` minutes, while the shortest distraction lasted `r minimum_duration` minutes.
+
+The most common type of distraction was `r most_common_distraction`.
+
+## Number of distractions by type
+
+```{r}
+latest_data %>%
+  count(distraction_type) %>%
+  ggplot(aes(x = distraction_type, y = n)) +
+  geom_col() +
+  labs(
+    title = 'Number of distractions by type',
+    x = 'Type of distraction',
+    y = 'Frequency of distractions'
+  )
+```
+
+This graph shows which types of distractions happened most often during the week.
+
+## Number of distractions by study location
+
+```{r}
+latest_data %>%
+  count(location) %>%
+  ggplot(aes(x = location, y = n)) +
+  geom_col() +
+  labs(
+    title = 'Number of distractions by study location',
+    x = 'Study location',
+    y = 'Frequency of distractions'
+  )
+```
+
+This graph shows which study locations were linked to the highest number of distractions.
+
+## Duration of distractions at each study location
+
+```{r}
+latest_data %>%
+  ggplot(aes(x = location, y = duration)) +
+  geom_boxplot() +
+  labs(
+    title = 'Duration of distractions at each study location',
+    x = 'Study location',
+    y = 'Duration of distraction (minutes)'
+  )
+```
+
+This boxplot compares how long distractions lasted depending on where I was studying.
